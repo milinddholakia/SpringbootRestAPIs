@@ -1,25 +1,46 @@
 package com.md.springboot.restapis.Pojos;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name ="PERSONS")
 public class Persons {
-@Id
-  private String personid;
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ")
+  @SequenceGenerator(name = "SEQ", sequenceName = "PERSON_SEQ",allocationSize = 1)
+  @Id
+  @Column(name = "PERSONID")
+  private Integer personid;
+
+  @Column(name = "LASTNAME")
   private String lastname;
+  @Column(name = "FIRSTNAME")
+
   private String firstname;
+  @Column(name = "ADDRESS")
   private String address;
+  @Column(name = "CITY")
   private String city;
 
+  public Persons(int personid, String lastname, String firstname, String address, String city) {
+    super();
+    this.personid = personid;
+    this.lastname = lastname;
+    this.firstname = firstname;
+    this.address = address;
+    this.city = city;
+  }
 
-  public String getPersonid() {
+  public Persons() {
+
+  }
+
+
+  public Integer getPersonid() {
     return personid;
   }
 
-  public void setPersonid(String personid) {
+  public void setPersonid(Integer personid) {
     this.personid = personid;
   }
 
@@ -46,6 +67,17 @@ public class Persons {
     return address;
   }
 
+  @Override
+  public String toString() {
+    return "Persons{" +
+            "personid='" + personid + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", firstname='" + firstname + '\'' +
+            ", address='" + address + '\'' +
+            ", city='" + city + '\'' +
+            '}';
+  }
+
   public void setAddress(String address) {
     this.address = address;
   }
@@ -59,4 +91,16 @@ public class Persons {
     this.city = city;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Persons)) return false;
+    Persons persons = (Persons) o;
+    return getPersonid().equals(persons.getPersonid()) && getLastname().equals(persons.getLastname()) && getFirstname().equals(persons.getFirstname()) && getAddress().equals(persons.getAddress()) && getCity().equals(persons.getCity());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getPersonid(), getLastname(), getFirstname(), getAddress(), getCity());
+  }
 }

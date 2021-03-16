@@ -31,7 +31,7 @@ public class ApiServices {
         return  persons;
     }
 
-    public void addValue(String p){
+    public void addValue(Integer p){
         Persons persons = new Persons();
         persons.setPersonid(p);
         apiRepository.save(persons);
